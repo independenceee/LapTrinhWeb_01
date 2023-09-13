@@ -35,12 +35,13 @@ namespace THUC_HANH_1.Controllers
         }
 
         [Route("Admin/Student/List")]
+        [HttpGet]
         public IActionResult Index()
         {
             return View(listStudents);
         }
-        [Route("Admin/Student")]
-        [HttpGet("Add")]
+        [Route("Admin/Student/Add")]
+        [HttpGet]
         public IActionResult Create()
         {
             //lấy danh sách các giá trị Gender để hiển thị radio button trên form
@@ -56,16 +57,12 @@ namespace THUC_HANH_1.Controllers
             };
             return View();
         }
-        [Route("Admin/Student")]
-        [HttpPost("Add")]
+        [Route("Admin/Student/Add")]
+        [HttpPost]
         public async Task<ActionResult> Create(Student s, IFormFile file)
         {
             s.Id = listStudents.Last<Student>().Id + 1;
             listStudents.Add(s);
-
-
-            try
-            {
                 if (await uploadFile.Upload(file))
                 {
                     ViewBag.Message = "File Upload Successful";
@@ -74,13 +71,7 @@ namespace THUC_HANH_1.Controllers
                 {
                     ViewBag.Message = "File Upload Failed";
                 }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = "File Upload Failed";
-            }
-
-
+           
             return View("Index", listStudents);
         }
     }
