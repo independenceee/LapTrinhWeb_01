@@ -1,41 +1,43 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using THUC_HANH_1.Services;
-namespace THUC_HANH_1.Controllers
+using THUC_HANH_1.Services.Interfaces;
+
+
+namespace StudentManagement.Controllers
 {
-        public class BufferedFileUploadController : Controller
+    public class BufferedFileUploadController : Controller
+    {
+        readonly IBufferedFileUploadService _bufferedFileUploadService;
+
+        public BufferedFileUploadController(IBufferedFileUploadService bufferedFileUploadService)
         {
-            readonly IBufferedFileUploadService _bufferedFileUploadService;
+            _bufferedFileUploadService = bufferedFileUploadService;
+        }
 
-            public BufferedFileUploadController(IBufferedFileUploadService bufferedFileUploadService)
-            {
-                _bufferedFileUploadService = bufferedFileUploadService;
-            }
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-            public IActionResult Index()
+        [HttpPost]
+        public async Task<ActionResult> Index(IFormFile file)
+        {
+            try
             {
-                return View();
-            }
-
-            [HttpPost]
-            public async Task<ActionResult> Index(IFormFile file)
-            {
-                try
+                if (await _bufferedFileUploadService.UploadFile(file))
                 {
-                    if (await _bufferedFileUploadService.UploadFile(file))
-                    {
-                        ViewBag.Message = "File Upload Successful";
-                    }
-                    else
-                    {
-                        ViewBag.Message = "File Upload Failed";
-                    }
+                    ViewBag.Message = "File Upload Successful";
                 }
-                catch
+                else
                 {
-                    //Log ex
                     ViewBag.Message = "File Upload Failed";
                 }
-                return View();
             }
+            catch
+            {
+                //Log ex
+                ViewBag.Message = "File Upload Failed";
+            }
+            return View();
         }
+    }
 }

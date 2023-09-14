@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
-using THUC_HANH_1.Controllers;
 using THUC_HANH_1.Models;
-using THUC_HANH_1.Services;
+using THUC_HANH_1.Services.Interfaces;
+
 
 namespace THUC_HANH_1.Controllers
 {

@@ -1,33 +1,37 @@
-﻿namespace THUC_HANH_1.Services;
+﻿using THUC_HANH_1.Services.Interfaces;
 
-public class BufferedFileUploadService
+
+namespace THUC_HANH_1.Services
 {
-    public async Task<bool> UploadFile(IFormFile file)
+    public class BufferedFileUploadLocalService : IBufferedFileUploadService
     {
-        string path = "";
-        try
+        public async Task<bool> UploadFile(IFormFile file)
         {
-            if (file.Length > 0)
+            string path = "";
+            try
             {
-                path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "wwwroot", "UploadedFiles"));
-                if (!Directory.Exists(path))
+                if (file.Length > 0)
                 {
-                    Directory.CreateDirectory(path);
+                    path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "wwwroot", "UploadedFiles"));
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    return true;
                 }
-                using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                else
                 {
-                    await file.CopyToAsync(fileStream);
+                    return false;
                 }
-                return true;
             }
-            else
+            catch (Exception ex)
             {
-                return false;
+                throw new Exception("File Copy Failed", ex);
             }
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("File Copy Failed", ex);
         }
     }
 }

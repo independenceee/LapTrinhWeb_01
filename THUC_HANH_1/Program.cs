@@ -1,5 +1,8 @@
-var builder = WebApplication.CreateBuilder(args);
+using THUC_HANH_1.Services.Interfaces;
+using THUC_HANH_1.Services;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLocalService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

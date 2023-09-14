@@ -1,4 +1,6 @@
-﻿namespace THUC_HANH_1.Models
+﻿using THUC_HANH_1.Models;
+
+namespace THUC_HANH_1.Models
 {
     public class Student
     {
@@ -12,6 +14,5 @@
         public string? Address { get; set; }
         public DateTime DateOfBorth { get; set; }
         public string? AvatarUrl { get; set; }
-
     }
 }
