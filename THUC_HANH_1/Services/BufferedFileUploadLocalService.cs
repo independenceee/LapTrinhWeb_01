@@ -1,18 +1,15 @@
-﻿using THUC_HANH_1.Controllers.Interfaces;
-
-namespace THUC_HANH_1.Controllers.services
+﻿namespace THUC_HANH_1.services
 {
-    public class UploadFile: IFileUpload 
+    public class BufferedFileUploadLocalService
     {
-
-        public async Task<bool> Upload( IFormFile file)
+        public async Task<bool> UploadFile(IFormFile file)
         {
             string path = "";
             try
             {
-                if(file.Length > 0 )
+                if (file.Length > 0)
                 {
-                    path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
+                    path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "wwwroot", "UploadedFiles"));
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);
@@ -23,14 +20,14 @@ namespace THUC_HANH_1.Controllers.services
                     }
                     return true;
                 }
-
                 else
                 {
                     return false;
                 }
-            } catch (Exception e)
+            }
+            catch (Exception ex)
             {
-                throw new Exception("File Copy Failed", e);
+                throw new Exception("File Copy Failed", ex);
             }
         }
     }
