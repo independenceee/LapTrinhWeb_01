@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<Student>
 
-<a href="/Admin/Student/Add" class="btn btn-primary">Create Student</a>
+@* Cách 1 *@
+<a asp-action="Create" class="btn btn-primary">Create Student</a>
+
+@* Cách 2 *@
+<a href="/Admin/Student/Add" class="btn btn-primary">Create Student (href)</a>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -12,6 +17,7 @@
             <th>Hệ ĐT</th>
             <th>Địa chỉ</th>
             <th>Email</th>
+            <th>Avatar</th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +30,6 @@
                 @{
                     string str = "";
                     switch (s.Branch)
-
                     {
                         case Branch.IT:
                             str = "CNTT";
@@ -46,14 +51,23 @@
                 <td>@(s.IsRegular ? "Chính quy" : "Phi chính quy")</td>
                 <td>@s.Address</td>
                 <td>@s.Email</td>
+                <td>
+                    @if (s.AvatarUrl != null)
+                    {
+                        <a href="/@s.AvatarUrl">
+                            <img src="/@s.AvatarUrl" 
+                            width="50"
+                            height="50"
+                            style="border-radius: 5px"
+                            />
+                        </a>
+                    }
+                    else
+                    {
+                        <span>None</span>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
-
-@if (ViewBag.Message != null)
-{
-    <div class="alert text-danger" style="margin-top:20px">
-        @ViewBag.Message
-    </div>
-}

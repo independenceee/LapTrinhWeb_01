@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using THUC_HANH_1.services;
+using THUC_HANH_1.Services;
 namespace THUC_HANH_1.Controllers
 {
-    
         public class BufferedFileUploadController : Controller
         {
-            readonly IBufferedFileUploadLocalService _bufferedFileUploadService;
+            readonly IBufferedFileUploadService _bufferedFileUploadService;
 
-            public BufferedFileUploadController(IBufferedFileUploadLocalService bufferedFileUploadService)
+            public BufferedFileUploadController(IBufferedFileUploadService bufferedFileUploadService)
             {
                 _bufferedFileUploadService = bufferedFileUploadService;
             }
@@ -39,5 +38,4 @@ namespace THUC_HANH_1.Controllers
                 return View();
             }
         }
-    
 }
