@@ -16,6 +16,7 @@ namespace THUC_HANH_1.Services
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);
+                        //http
                     }
                     using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
                     {
